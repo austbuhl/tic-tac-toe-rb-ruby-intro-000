@@ -64,3 +64,44 @@ def current_player(board)
      "O"
   end
 end
+
+def won?(board)
+  WIN_COMBINATIONS.each do |win_combo|
+    win1 = win_combo[0]
+    win2 = win_combo[1]
+    win3 = win_combo[2]
+
+    position_1 = board[win1]
+    position_2 = board[win2]
+    position_3 = board[win3]
+
+    if position_1 == "X" && position_2 == "X" && position_3 == "X"
+      return win_combo
+    elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
+      return win_combo
+    end
+  end
+  return false
+end
+
+def full?(board)
+  board.all? {|space| space == "X" || space == "O"}
+end
+
+def draw?(board)
+  if full?(board) && !won?(board)
+    return true
+  end
+end
+
+def over?(board)
+  if won?(board) || draw?(board) || full?(board)
+    return true
+  end
+end
+
+def winner(board)
+  if won?(board)
+    return board[won?(board)[0]]
+  end
+end
